@@ -1,0 +1,8 @@
+[Unit]
+Description=Kafka Service
+[Service]
+Type=simple
+User=root
+ExecStart= /usr/share/kafka/bin/kafka-server-start.sh  /usr/share/kafka/config/server.properties
+[Install]
+WantedBy=multi-user.target

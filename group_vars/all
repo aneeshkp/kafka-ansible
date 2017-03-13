@@ -1,0 +1,14 @@
+
+scala_url=http://www.scala-lang.org/files/archive/scala-2.10.3.tgz
+scala_file=scala-2.10.3.tar.gz
+
+kafka_url=http://www.us.apache.org/dist/kafka/0.10.0.1/kafka_2.10-0.10.0.1.tgz
+kafka_file=kafka_2.10-0.10.0.1.tar.gz
+
+#java_installer=java-1.8.0-openjdk-headless
+java_installer=java-1.8.0-openjdk-devel.x86_64
+
+overcloudrc: ~/overcloudrc
+
+zookeper_dir=/var/zookeeper/data
+

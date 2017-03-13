@@ -1,0 +1,17 @@
+---
+ 
+- name: install Kafka
+  hosts: controllers  
+  remote_user: root
+  roles:
+    - common
+    - install-kafka
+
+
+
+- name: install zookeeper
+  hosts: compute
+  remote_user: root
+  roles:
+    - common
+    - install-zookeeper
