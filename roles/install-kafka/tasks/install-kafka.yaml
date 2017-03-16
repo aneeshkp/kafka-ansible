@@ -1,11 +1,4 @@
 ---
-
-
-- name: create vitrage-notifier systemd service
-  template: src=vitrage-notifier.service.j2 dest=/etc/systemd/system/vitrage-notifier.service mode=0644 seuser=unconfined_u force=yes
-  become: true
-
----
 - name: create  kafka systemd service
   template: src=kafka-service.j2 dest=/etc/systemd/system/kafka-service.service mode=0644 seuser=unconfined_u force=yes
   become: true
