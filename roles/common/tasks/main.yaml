@@ -8,15 +8,17 @@
 
 - name: download scalla
   shell: >
-    wget http://www.scala-lang.org/files/archive/scala-2.10.3.tgz -O scala-2.10.3.tar.gz
+    #wget http://www.scala-lang.org/files/archive/scala-2.10.3.tgz -O scala-2.10.3.tar.gz
+    wget http://www.scala-lang.org/files/archive/scala-2.10.3.rpm -O scala-2.10.3.rpm
   become: true
 
 
 - name: config kafka
   shell: >
-    tar -xvzf scala-2.10.3.tar.gz;
-    mv scala-2.10.3 /usr/lib;
-    ln -s /usr/lib/scala-2.10.3 /usr/lib/scala
+    #tar -xvzf scala-2.10.3.tar.gz;
+    #mv scala-2.10.3 /usr/lib;
+    #ln -s /usr/lib/scala-2.10.3 /usr/lib/scala
+    rpm -ivh scala-2.10.3.rpm
   become: true
 
 
