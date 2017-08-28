@@ -4,13 +4,11 @@
   action: "{{ ansible_pkg_mgr }} name={{ item }} state=present"
   with_items:
    - java-1.8.0-openjdk-devel.x86_64
-  become: true
 
 - name: download scalla
   shell: >
     #wget http://www.scala-lang.org/files/archive/scala-2.10.3.tgz -O scala-2.10.3.tar.gz
     wget http://www.scala-lang.org/files/archive/scala-2.10.3.rpm -O scala-2.10.3.rpm
-  become: true
 
 
 - name: config kafka
@@ -19,29 +17,26 @@
     #mv scala-2.10.3 /usr/lib;
     #ln -s /usr/lib/scala-2.10.3 /usr/lib/scala
     rpm -ivh scala-2.10.3.rpm
-  become: true
 
+- unarchive: 
+    src: http://www.us.apache.org/dist/kafka/0.10.0.1/kafka_2.10-0.10.0.1.tgz 
+    dest: /usr/share/kafka
+    remote_src: True
 
-
-- name: download kafka
+- name: Remove Ip Rules
   shell: >
-    wget http://www.us.apache.org/dist/kafka/0.10.0.1/kafka_2.10-0.10.0.1.tgz -O kafka_2.10-0.10.0.1.tar.gz
-  become: true
+   iptables -D INPUT -p tcp --dport 3888 -j ACCEPT;
+   iptables -D INPUT -p tcp --dport 2888 -j ACCEPT;
+   iptables -D INPUT -p tcp --dport 2181 -j ACCEPT;
+  ignore_errors: yes
 
-
-- name: config kafka
+- name: Setup Ip tables
   shell: >
-    tar -xvzf kafka_2.10-0.10.0.1.tar.gz;
-    mv  kafka_2.10-0.10.0.1 /usr/share/kafka
-  become: true
-
-- name: Run Ip tables
-  shell: >
-    iptables -I INPUT -p tcp -m tcp --dport 3888 -m comment --comment 'zookeeper 3888' -j ACCEPT
-    iptables -I INPUT -p tcp -m tcp --dport 2888 -m comment --comment 'zookeeper 2888' -j ACCEPT
-    iptables -I INPUT -p tcp -m tcp --dport 2181 -m comment --comment 'zookeeper 2181' -j ACCEPT
-    /sbin/service iptables save
-  become: true
+    iptables -I INPUT -p tcp --dport 3888 -j ACCEPT;
+    iptables -I INPUT -p tcp --dport 2888 -j ACCEPT;
+    iptables -I INPUT -p tcp --dport 2181 -j ACCEPT;
   
+- name: save iptables
+  command: iptables-save
 
   

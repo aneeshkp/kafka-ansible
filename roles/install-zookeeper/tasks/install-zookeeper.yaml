@@ -1,15 +1,14 @@
 ---
 
---name : config zookeeper
-  shell:>
+- name : config zookeeper
+  shell: >
+   mkdir -p /var/zookeeper/data;
    touch /var/zookeeper/data/myid;
-   echo 1 >> /var/zookeeper/data/myid
+   echo 1 >> /var/zookeeper/data/myid;
    
 - name: create zookeeper systemd service
   template: src=zookeeper-service.j2 dest=/etc/systemd/system/zookeeper-service.service mode=0644 seuser=unconfined_u force=yes
-  become: true
 
 - name: enable vitrage systemd service
   service: state=started enabled=yes name=zookeeper-service
-  become: true
 
